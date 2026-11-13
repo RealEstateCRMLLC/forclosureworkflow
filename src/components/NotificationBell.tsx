@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Bell } from "lucide-react";
+import { apiUrl } from '@/lib/api-base';
 
 interface Notification {
   id: string;
@@ -17,7 +18,7 @@ export function NotificationBell() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await fetch("/api/notifications");
+      const res = await fetch(apiUrl("/api/notifications"));
       const contentType = res.headers.get("content-type") || "";
       if (res.ok && contentType.includes("application/json")) {
         const data = await res.json();
@@ -37,7 +38,7 @@ export function NotificationBell() {
 
   const markAllRead = async () => {
     try {
-      await fetch("/api/notifications", {
+      await fetch(apiUrl("/api/notifications"), {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "markAllRead" })

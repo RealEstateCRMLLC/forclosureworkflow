@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
+import { apiUrl } from '@/lib/api-base';
 
 export function ClientLeadsList({ leads }: { leads: any[] }) {
   const [selectedLeads, setSelectedLeads] = useState<string[]>([]);
@@ -31,7 +32,7 @@ export function ClientLeadsList({ leads }: { leads: any[] }) {
     setIsBulkLoading(true);
 
     try {
-      await fetch("/api/leads/bulk", {
+      await fetch(apiUrl("/api/leads/bulk"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadIds: selectedLeads, action, value })

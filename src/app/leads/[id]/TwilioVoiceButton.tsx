@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Phone, Loader2 } from "lucide-react";
+import { apiUrl } from '@/lib/api-base';
 
 export function TwilioVoiceButton({ leadId, toPhone }: { leadId: string, toPhone: string }) {
   const [status, setStatus] = useState<"idle" | "calling" | "success" | "error">("idle");
@@ -10,7 +11,7 @@ export function TwilioVoiceButton({ leadId, toPhone }: { leadId: string, toPhone
     setStatus("calling");
 
     try {
-      const res = await fetch(`/api/communications/voice?to=${encodeURIComponent(toPhone)}&leadId=${leadId}`);
+      const res = await fetch(apiUrl(`/api/communications/voice?to=${encodeURIComponent(toPhone)}&leadId=${leadId}`));
       if (!res.ok) {
         throw new Error("Failed to call");
       }

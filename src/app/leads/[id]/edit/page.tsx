@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
+import { apiUrl } from '@/lib/api-base';
 
 export default function EditLeadPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function EditLeadPage({ params }: { params: Promise<{ id: string 
   useEffect(() => {
     const fetchLead = async () => {
       try {
-        const res = await fetch(`/api/leads/${id}`);
+        const res = await fetch(apiUrl(`/api/leads/${id}`));
         if (!res.ok) throw new Error("Failed to fetch lead");
         const data = await res.json();
 
@@ -70,7 +71,7 @@ export default function EditLeadPage({ params }: { params: Promise<{ id: string 
     setError(null);
 
     try {
-      const res = await fetch(`/api/leads/${id}`, {
+      const res = await fetch(apiUrl(`/api/leads/${id}`), {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

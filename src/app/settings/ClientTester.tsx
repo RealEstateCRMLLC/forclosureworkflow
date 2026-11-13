@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Play } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { apiUrl } from '@/lib/api-base';
 
 export function IntakeTester() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export function IntakeTester() {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch("/api/intake", {
+      const res = await fetch(apiUrl("/api/intake"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ notices: [rawText], source: "Manual UI Test" })
@@ -68,7 +69,7 @@ export function DatabaseResetButton() {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/settings/reset", {
+      const res = await fetch(apiUrl("/api/settings/reset"), {
         method: "POST"
       });
       if (res.ok) {
