@@ -74,7 +74,7 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="mt-4 text-xs text-center text-gray-500">
-          Default MVP Credentials: admin / admin
+          Authorized access only. Contact your administrator for credentials.
         </p>
       </div>
     </div>
