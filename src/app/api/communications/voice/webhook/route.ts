@@ -2,8 +2,14 @@ import { NextResponse } from 'next/server';
 import { prisma } from "@/lib/prisma";
 
 export async function POST(request: Request) {
+  let formData: FormData;
   try {
-    const formData = await request.formData();
+    formData = await request.formData();
+  } catch {
+    // Twilio posts form-encoded data; anything else is not a valid callback.
+    return NextResponse.json({ error: 'Expected form-encoded Twilio callback' }, { status: 400 });
+  }
+  try {
     const callSid = formData.get('CallSid') as string;
     const callStatus = formData.get('CallStatus') as string;
     const duration = formData.get('CallDuration') as string;
