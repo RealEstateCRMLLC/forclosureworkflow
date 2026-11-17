@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiUrl } from "@/lib/api-base";
 import { useRouter } from "next/navigation";
 import { FileText, Upload, Download, Loader2 } from "lucide-react";
 
@@ -34,7 +35,7 @@ export function DocumentUploader({ leadId, documents }: DocumentUploaderProps) {
     formData.append("leadId", leadId);
 
     try {
-      const res = await fetch("/api/documents", {
+      const res = await fetch(apiUrl("/api/documents"), {
         method: "POST",
         body: formData,
       });

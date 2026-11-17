@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { apiUrl } from "@/lib/api-base";
 import { Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -18,7 +19,7 @@ export function CsvImportButton() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("/api/import", {
+      const res = await fetch(apiUrl("/api/import"), {
         method: "POST",
         body: formData,
       });

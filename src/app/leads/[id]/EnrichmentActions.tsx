@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { apiUrl } from "@/lib/api-base";
 import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 
@@ -19,7 +20,7 @@ export function AddContactButton({ leadId }: { leadId: string }) {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch("/api/contacts", {
+      await fetch(apiUrl("/api/contacts"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, ...formData }),
@@ -93,7 +94,7 @@ export function AddRelativeButton({ leadId }: { leadId: string }) {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch("/api/relatives", {
+      await fetch(apiUrl("/api/relatives"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, ...formData }),
@@ -155,7 +156,7 @@ export function ResolveAddressButton({ leadId }: { leadId: string }) {
   const handleResolve = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/enrich/connector", {
+      const res = await fetch(apiUrl("/api/enrich/connector"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, connectorType: "TaxAssessor" }),
@@ -193,7 +194,7 @@ export function RunConnectorButton({ leadId }: { leadId: string }) {
   const handleRun = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/enrich/connector", {
+      const res = await fetch(apiUrl("/api/enrich/connector"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, connectorType: "MyPlusLeads" }),

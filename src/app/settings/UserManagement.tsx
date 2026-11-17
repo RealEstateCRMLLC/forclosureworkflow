@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { apiUrl } from "@/lib/api-base";
 import { Users, Plus, Trash2 } from "lucide-react";
 
 export function UserManagement() {
@@ -11,7 +12,7 @@ export function UserManagement() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("/api/users");
+      const res = await fetch(apiUrl("/api/users"));
       if (res.ok) {
         const data = await res.json();
         setUsers(data);
@@ -30,7 +31,7 @@ export function UserManagement() {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/users", {
+      const res = await fetch(apiUrl("/api/users"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

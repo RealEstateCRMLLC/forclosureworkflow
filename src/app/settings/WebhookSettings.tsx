@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { apiUrl } from "@/lib/api-base";
 import { Save } from "lucide-react";
 
 export function WebhookSettings() {
@@ -23,7 +24,7 @@ export function WebhookSettings() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch("/api/settings");
+        const res = await fetch(apiUrl("/api/settings"));
         if (res.ok) {
           const data = await res.json();
           setWebhookUrl(data.webhookUrl || "");
@@ -52,7 +53,7 @@ export function WebhookSettings() {
   const handleSave = async () => {
     setLoading(true);
     try {
-      await fetch("/api/settings", {
+      await fetch(apiUrl("/api/settings"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

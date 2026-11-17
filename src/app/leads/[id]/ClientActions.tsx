@@ -1,5 +1,6 @@
 "use client";
 import { TwilioVoiceButton } from "./TwilioVoiceButton";
+import { apiUrl } from "@/lib/api-base";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -15,7 +16,7 @@ export function AddNoteButton({ leadId }: { leadId: string }) {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch("/api/notes", {
+      await fetch(apiUrl("/api/notes"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, content }),
@@ -65,7 +66,7 @@ export function AddTaskButton({ leadId }: { leadId: string }) {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch("/api/tasks", {
+      await fetch(apiUrl("/api/tasks"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, title, dueDate: dueDate || null }),
@@ -156,7 +157,7 @@ export function CommsButtons({ leadId, defaultPhone, defaultEmail }: { leadId: s
     e.preventDefault();
     setSmsStatus("sending");
     try {
-      const res = await fetch("/api/communications/sms", {
+      const res = await fetch(apiUrl("/api/communications/sms"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, to: smsTo, message: smsMessage }),
@@ -180,7 +181,7 @@ export function CommsButtons({ leadId, defaultPhone, defaultEmail }: { leadId: s
     e.preventDefault();
     setEmailStatus("sending");
     try {
-      const res = await fetch("/api/communications/email", {
+      const res = await fetch(apiUrl("/api/communications/email"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, to: emailTo, subject: emailSubject, body: emailBody }),
@@ -293,7 +294,7 @@ export function SequenceEnrollButton({ leadId }: { leadId: string }) {
     if (!sequence) return;
     setLoading(true);
     try {
-      const res = await fetch("/api/sequences/enroll", {
+      const res = await fetch(apiUrl("/api/sequences/enroll"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, sequence }),
@@ -353,7 +354,7 @@ export function PushToCrmButton({ leadId }: { leadId: string }) {
     setStatus("idle");
 
     try {
-      const res = await fetch("/api/export/webhook", {
+      const res = await fetch(apiUrl("/api/export/webhook"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId })
@@ -403,7 +404,7 @@ export function AddTagButton({ leadId }: { leadId: string }) {
     setLoading(true);
 
     try {
-      await fetch("/api/tags", {
+      await fetch(apiUrl("/api/tags"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leadId, name }),
