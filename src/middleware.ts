@@ -27,7 +27,10 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const signInUrl = new URL('/login', req.url);
+  // Sign-in URL must keep the mount prefix: new URL('/login', ...) resolves
+  // against the domain root, which is the main CRM (404). nextUrl.basePath
+  // carries this app's prefix (/foreclosure).
+  const signInUrl = new URL(`${req.nextUrl.basePath || ''}/login`, req.url);
   signInUrl.searchParams.set('callbackUrl', pathname + search);
   return NextResponse.redirect(signInUrl);
 }
